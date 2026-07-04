@@ -1,5 +1,15 @@
-# Boykot Rehberi
+# Boykot Rehberi - Modern Sürüm
 
-Bu sürümde JSON alanı **anafirma** olarak düzeltildi. Toplam kayıt: 1362.
+GitHub Pages'e yüklemek için ZIP içindeki tüm dosyaları repoya yükle.
 
-GitHub'a ZIP dosyasını değil, içindeki dosyaları yükleyin.
+Dosyalar:
+- index.html
+- app.js
+- style.css
+- data.json
+- manifest.json
+- sw.js
+- icon-192.png
+- icon-512.png
+
+Not: data.json içinde alan adı küçük harfle `anafirma` olarak düzenlendi.

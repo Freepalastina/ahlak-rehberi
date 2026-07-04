@@ -1,1 +1,59 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Boykot Rehberi</title><meta name="theme-color" content="#111827"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css"></head><body><header class="hero"><div><h1>Boykot Rehberi</h1><p>Marka, ana firma, kategori ve alternatif ara</p></div><button id="installBtn" hidden>Yükle</button></header><main><section class="searchBox"><input id="search" type="search" placeholder="Marka veya ana firma ara..." autocomplete="off"><button id="clearBtn">Temizle</button></section><section class="filters"><button class="active" data-filter="all">Hepsi</button><button data-filter="A1">A1</button><button data-filter="A2">A2</button><button data-filter="D1">D1</button><button data-filter="fav">Favoriler</button></section><section id="stats" class="stats"></section><section id="results" class="results"></section></main><nav class="bottomNav"><button class="navActive" data-view="search">Ara</button><button data-view="companies">Ana Firmalar</button><button data-view="categories">Kategoriler</button><button data-view="about">Bilgi</button></nav><dialog id="detailDialog"><div id="detailContent"></div><button id="closeDialog">Kapat</button></dialog><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Boykot Rehberi</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="appShell">
+    <header class="hero">
+      <div class="heroTop">
+        <div class="brandMark">BR</div>
+        <div>
+          <h1>Boykot Rehberi</h1>
+          <p id="subtitle">Marka, ana firma ve alternatif ara</p>
+        </div>
+        <button id="themeBtn" class="iconBtn" aria-label="Tema değiştir">🌙</button>
+      </div>
+
+      <label class="searchBox" for="searchInput">
+        <span>🔎</span>
+        <input id="searchInput" type="search" placeholder="Marka, ana firma, kategori veya alternatif ara..." autocomplete="off" />
+        <button id="clearSearch" class="clearBtn" aria-label="Aramayı temizle">×</button>
+      </label>
+
+      <div class="quickFilters" aria-label="Filtreler">
+        <button class="chip active" data-filter="all">Tümü</button>
+        <button class="chip" data-filter="boykot">Boykot</button>
+        <button class="chip" data-filter="inceleniyor">İnceleniyor</button>
+        <button class="chip" data-filter="alternatif">Alternatif</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="stats" class="stats"></section>
+      <section id="contentTitle" class="sectionTitle"></section>
+      <section id="results" class="results"></section>
+    </main>
+  </div>
+
+  <nav class="bottomNav" aria-label="Alt menü">
+    <button class="navActive" data-view="home"><span>🏠</span><small>Ana Sayfa</small></button>
+    <button data-view="companies"><span>🏢</span><small>Ana Firmalar</small></button>
+    <button data-view="categories"><span>📂</span><small>Kategoriler</small></button>
+    <button data-view="favorites"><span>⭐</span><small>Favoriler</small></button>
+    <button data-view="about"><span>ℹ️</span><small>Hakkında</small></button>
+  </nav>
+
+  <dialog id="detailDialog" class="sheet">
+    <div id="detailContent"></div>
+    <button id="closeDialog" class="primaryBtn">Kapat</button>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

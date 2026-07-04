@@ -1,55 +1,56 @@
+
 :root{
-  --bg:#0f172a; --panel:#111827; --text:#f9fafb; --muted:#cbd5e1;
-  --red:#dc2626; --orange:#ea580c; --green:#16a34a; --gray:#64748b;
+  --bg:#0b1120; --panel:#111827; --panel2:#1f2937; --text:#f9fafb; --muted:#cbd5e1;
+  --red:#dc2626; --redBg:#fee2e2; --orange:#ea580c; --orangeBg:#ffedd5;
+  --green:#16a34a; --greenBg:#dcfce7; --gray:#64748b; --grayBg:#f1f5f9; --blue:#2563eb;
 }
 *{box-sizing:border-box}
-body{
-  margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:linear-gradient(160deg,#020617,#111827); color:var(--text);
-}
-.app{max-width:720px;margin:auto;min-height:100vh;padding:20px}
-.hero{text-align:center;padding:26px 10px 18px}
-.logo{font-size:42px}
-h1{margin:8px 0 4px;font-size:32px}
-p{color:var(--muted)}
-.searchBox{
-  position:sticky;top:0;z-index:10;background:rgba(15,23,42,.92);
-  backdrop-filter:blur(10px);padding:12px 0 14px;
-}
-input{
-  width:100%;font-size:20px;padding:17px 18px;border-radius:18px;border:2px solid #334155;
-  background:#fff;color:#0f172a;outline:none;
-}
-input:focus{border-color:#fbbf24;box-shadow:0 0 0 4px rgba(251,191,36,.15)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-top:12px}
-button{
-  border:0;border-radius:999px;padding:10px 13px;background:#334155;color:#fff;
-  white-space:nowrap;font-weight:700;
-}
-button.active{background:#fbbf24;color:#111827}
-.results{display:grid;gap:14px;margin-top:18px}
-.card{
-  background:#fff;color:#111827;border-radius:22px;padding:18px;
-  box-shadow:0 18px 50px rgba(0,0,0,.25);border-left:10px solid var(--gray);
-}
+html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:760px;margin:0 auto;min-height:100vh;padding:18px 14px 92px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px 16px}
+h1{margin:0;font-size:28px;letter-spacing:-.03em}
+p{margin:.25rem 0;color:var(--muted)}
+.install{background:#fbbf24;color:#111827;border:0;border-radius:14px;padding:11px 13px;font-weight:900}
+.searchPanel{position:sticky;top:0;z-index:5;background:rgba(11,17,32,.94);backdrop-filter:blur(12px);padding:8px 0 12px}
+.searchLine{display:flex;align-items:center;gap:10px;background:#fff;border-radius:22px;padding:0 12px;box-shadow:0 14px 36px rgba(0,0,0,.28)}
+.searchLine span{font-size:22px}
+input{border:0;outline:0;flex:1;font-size:22px;padding:18px 0;color:#111827;min-width:0}
+#clearBtn{border:0;background:#e5e7eb;color:#111827;width:34px;height:34px;border-radius:50%;font-size:24px;line-height:1}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px}
+.filters button,.bottomNav button{border:0}
+.filters button{background:#334155;color:#fff;border-radius:999px;padding:10px 13px;font-weight:800;white-space:nowrap}
+.filters button.active{background:#fbbf24;color:#111827}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 12px}
+.stat{background:#111827;border:1px solid #334155;border-radius:14px;padding:10px;text-align:center}
+.stat b{display:block;font-size:18px}
+.stat small{color:#cbd5e1}
+.results{display:grid;gap:12px}
+.card{background:#fff;color:#111827;border-radius:22px;padding:16px;box-shadow:0 16px 48px rgba(0,0,0,.26);border-left:10px solid var(--gray);cursor:pointer}
 .card.boykot{border-left-color:var(--red)}
 .card.dikkat{border-left-color:var(--orange)}
 .card.alternatif{border-left-color:var(--green)}
 .card.inceleniyor{border-left-color:var(--gray)}
-.status{font-weight:900;font-size:15px;margin-bottom:8px}
-.card.boykot .status{color:var(--red)}
-.card.dikkat .status{color:var(--orange)}
-.card.alternatif .status{color:var(--green)}
-.card.inceleniyor .status{color:var(--gray)}
-h2{margin:0 0 12px;font-size:26px}
-.grid{
-  display:grid;grid-template-columns:110px 1fr;gap:10px 12px;
-  background:#f8fafc;border-radius:16px;padding:14px;
+.cardTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.status{font-weight:950;font-size:14px}
+.boykot .status{color:var(--red)} .dikkat .status{color:var(--orange)} .alternatif .status{color:var(--green)} .inceleniyor .status{color:var(--gray)}
+.card h2{margin:4px 0 10px;font-size:25px;letter-spacing:-.02em}
+.pill{background:#eef2ff;color:#3730a3;border-radius:999px;padding:6px 9px;font-weight:800;font-size:12px;white-space:nowrap}
+.info{display:grid;grid-template-columns:100px 1fr;gap:8px;background:#f8fafc;border-radius:16px;padding:12px}
+.info span{color:#64748b}.info b{font-weight:850}
+.empty{background:#1f2937;border:1px solid #334155;border-radius:22px;padding:28px;text-align:center;color:#e5e7eb}
+.groupTitle{font-size:18px;font-weight:950;margin:14px 0 8px;color:#fbbf24}
+.groupItem{background:#fff;color:#111827;border-radius:16px;padding:14px;margin:8px 0;display:flex;justify-content:space-between;align-items:center}
+.groupItem small{color:#64748b}
+.bottomNav{position:fixed;bottom:0;left:0;right:0;z-index:20;background:rgba(15,23,42,.96);backdrop-filter:blur(12px);display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid #334155;max-width:760px;margin:auto}
+.bottomNav button{background:transparent;color:#cbd5e1;padding:10px 4px;font-size:21px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bottomNav small{font-size:11px}.bottomNav .navActive{color:#fbbf24}
+dialog{border:0;border-radius:24px;max-width:92vw;width:520px;padding:0;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+#detailContent{padding:18px;color:#111827}
+#closeDialog{margin:0 18px 18px;width:calc(100% - 36px);border:0;background:#111827;color:#fff;border-radius:14px;padding:14px;font-weight:900}
+a{color:#2563eb;font-weight:800}
+@media(max-width:420px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  h1{font-size:24px}
+  .info{grid-template-columns:90px 1fr}
 }
-.grid span{color:#64748b}
-.grid b{font-weight:800}
-.note{color:#334155;margin:12px 0 8px}
-.source{display:inline-block;color:#2563eb;font-weight:800;text-decoration:none}
-.source[hidden]{display:none}
-.empty{text-align:center;background:#1e293b;border-radius:20px;padding:28px;color:#e2e8f0}
-footer{text-align:center;padding:30px 0;font-size:14px}

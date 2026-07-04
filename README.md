@@ -1,30 +1,38 @@
-Amaç
+# Boykot Rehberi PWA v2
 
-Bu proje, kullanıcıların çeşitli markalar ve ana şirketleri hakkında kamuya açık kaynaklardan derlenen bilgileri tek bir yerde görebilmesini amaçlayan bir bilgi ve araştırma projesidir.
-Bu proje, kullanıcıların kendi etik, sosyal ve ekonomik tercihleri doğrultusunda bilinçli tüketim kararları vermelerine yardımcı olmayı hedefler.
+## Özellikler
+- Telefonda uygulama gibi çalışır
+- Hızlı marka arama
+- Boykot / Dikkat / Alternatif / İnceleniyor filtreleri
+- Ana firma ve kategori listeleri
+- Detay penceresi
+- Çevrimdışı çalışma
+- Veriler `data.json` dosyasından güncellenir
 
-Veri Kaynakları
-Projedeki bilgiler mümkün olduğunca aşağıdaki gibi kamuya açık kaynaklardan derlenmektedir:
-Şirketlerin resmî internet siteleri
-Marka portföyleri
-Yıllık faaliyet raporları
-Düzenleyici kurum kayıtları
-Güvenilir haber kaynakları
-Kamuya açık şirket açıklamaları
-Her kayıt için mümkün olduğunca kaynak gösterilmesi hedeflenmektedir.
+## GitHub Pages
+1. Bu klasördeki dosyaları GitHub repo ana dizinine yükle.
+2. Settings → Pages → Deploy from branch → main seç.
+3. Verilen linki telefonda aç.
+4. “Ana ekrana ekle” seç.
 
-Önemli Not
-Bu proje herhangi bir şirket veya marka hakkında kesin hukuki veya fiilî bir değerlendirme sunmayı amaçlamaz.
-Projedeki sınıflandırmalar, kamuya açık bilgiler ile proje kapsamında benimsenen değerlendirme ölçütlerine dayanmaktadır ve zaman içinde güncellenebilir.
-Şirket yapıları, marka sahiplikleri ve ticari ilişkiler değişebileceğinden bilgiler güncelliğini yitirebilir.
+## Marka ekleme
+`data.json` dosyasına şu formatta yeni kayıt ekle:
 
-Şeffaflık
-Bir markanın listede yer alması, yalnızca proje kapsamında kullanılan sınıflandırma kriterlerine göre değerlendirilmiş olduğunu ifade eder.
-Kullanıcıların, sunulan kaynakları inceleyerek kendi değerlendirmelerini yapmaları tavsiye edilir.
-Hata Bildirimi
-Eksik, hatalı veya güncelliğini yitirmiş olduğunu düşündüğünüz bilgiler varsa lütfen bir Issue açın veya Pull Request gönderin.
-Doğrulanabilen düzeltmeler memnuniyetle değerlendirilir.
+```json
+{
+  "marka": "Yeni Marka",
+  "anaFirma": "Ana Firma",
+  "durum": "boykot",
+  "kod": "A2",
+  "kategori": "Temizlik",
+  "alternatif": "Alternatif marka",
+  "kaynak": "https://...",
+  "not": "Açıklama"
+}
+```
 
-Lisans
-Bu proje açık kaynak olarak paylaşılmaktadır.
-
+Durum değerleri:
+- boykot
+- dikkat
+- alternatif
+- inceleniyor

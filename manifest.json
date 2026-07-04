@@ -1,11 +1,12 @@
 {
-  "name": "AHLAK Rehberi",
+  "name": "Boykot Rehberi",
   "short_name": "Boykot",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0f172a",
+  "background_color": "#0b1120",
   "theme_color": "#111827",
-  "description": "Telefon için hızlı boykot arama rehberi",
+  "description": "Telefonda hızlı marka boykot arama rehberi",
   "icons": [
     {
       "src": "icon.svg",

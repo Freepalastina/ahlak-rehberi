@@ -2,23 +2,31 @@
 <html lang="tr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Boykot Rehberi</title>
   <meta name="theme-color" content="#111827">
+  <meta name="description" content="Telefonda hızlı marka boykot arama rehberi">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
-    <header class="hero">
-      <div class="logo">🔍</div>
-      <h1>Boykot Rehberi</h1>
-      <p>Markayı yaz, durumu hemen gör.</p>
+    <header class="top">
+      <div>
+        <h1>Boykot Rehberi</h1>
+        <p>Markayı yaz, sonucu hemen gör.</p>
+      </div>
+      <button id="installBtn" class="install" hidden>📲 Yükle</button>
     </header>
 
-    <section class="searchBox">
-      <input id="search" type="search" placeholder="Marka ara... örn. Ariel, KitKat, Dove" autocomplete="off" autofocus>
-      <div class="chips">
+    <section class="searchPanel">
+      <div class="searchLine">
+        <span>🔍</span>
+        <input id="search" type="search" placeholder="Marka ara..." autocomplete="off" autofocus>
+        <button id="clearBtn" title="Temizle">×</button>
+      </div>
+
+      <div class="filters">
         <button data-filter="all" class="active">Hepsi</button>
         <button data-filter="boykot">🔴 Boykot</button>
         <button data-filter="dikkat">🟠 Dikkat</button>
@@ -27,27 +35,21 @@
       </div>
     </section>
 
+    <section class="stats" id="stats"></section>
     <section id="results" class="results"></section>
 
-    <footer>
-      <p>Verileri <b>data.json</b> dosyasından güncelleyebilirsin.</p>
-    </footer>
+    <nav class="bottomNav">
+      <button data-view="search" class="navActive">🔍<small>Ara</small></button>
+      <button data-view="companies">🏢<small>Firmalar</small></button>
+      <button data-view="categories">📂<small>Kategori</small></button>
+      <button data-view="about">ℹ️<small>Bilgi</small></button>
+    </nav>
   </main>
 
-  <template id="cardTemplate">
-    <article class="card">
-      <div class="status"></div>
-      <h2></h2>
-      <div class="grid">
-        <span>Ana Firma</span><b class="firma"></b>
-        <span>Kategori</span><b class="kategori"></b>
-        <span>Kod</span><b class="kod"></b>
-        <span>Alternatif</span><b class="alternatif"></b>
-      </div>
-      <p class="note"></p>
-      <a class="source" target="_blank" rel="noopener">Kaynak</a>
-    </article>
-  </template>
+  <dialog id="detailDialog">
+    <article id="detailContent"></article>
+    <button id="closeDialog">Kapat</button>
+  </dialog>
 
   <script src="app.js"></script>
 </body>

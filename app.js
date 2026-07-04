@@ -1,194 +1,77 @@
-let DATA = [];
-let filter = "all";
-let view = "search";
-let deferredPrompt = null;
+let DATA=[];
+let filter="all";
+let view="search";
+let deferredPrompt=null;
+let favorites=[];
 
-const els = {
-  search: document.getElementById("search"),
-  results: document.getElementById("results"),
-  stats: document.getElementById("stats"),
-  clearBtn: document.getElementById("clearBtn"),
-  installBtn: document.getElementById("installBtn"),
-  dialog: document.getElementById("detailDialog"),
-  detail: document.getElementById("detailContent"),
-  closeDialog: document.getElementById("closeDialog")
-};
+const search=document.getElementById("search");
+const results=document.getElementById("results");
+const stats=document.getElementById("stats");
 
-function norm(value){
-  return String(value ?? "")
-    .toLocaleLowerCase("tr-TR")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/ı/g, "i")
-    .trim();
-}
-function esc(value){
-  return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-}
-function clean(value){ return String(value ?? "").trim(); }
-function codeLabel(kod){
-  const k = clean(kod).toUpperCase() || "D1";
-  if(k === "A1") return "🔴 A1";
-  if(k === "A2") return "🟠 A2";
-  if(k === "D1") return "⚪ D1";
-  return "ℹ️ " + k;
-}
-function normalizeItem(item, index){
-  const marka = clean(item.marka || item.Marka || item.brand) || `Marka ${index + 1}`;
-  const anaFirma = clean(item.anaFirma || item.anafirma || item.ana_firma || item["Ana Firma"]);
-  const kod = clean(item.kod || item.Kod || item.code || "D1").toUpperCase();
-  const kategori = clean(item.kategori || item.Kategori || item.category);
-  const alternatif = clean(item.alternatif || item.Alternatif || item.alternative);
-  const kaynak = clean(item.kaynak || item.Kaynak || item.kanyak || item.source || item.link);
-  const not = clean(item.not || item.Not || item.note);
-  return { id:index, marka, anaFirma, kod, kategori, alternatif, kaynak, not };
-}
+try{favorites=JSON.parse(localStorage.getItem("boykot_favorites")||"[]");if(!Array.isArray(favorites))favorites=[];}catch(e){favorites=[];}
+
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+function norm(v){return String(v??"").toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();}
+function val(x,k){return String(x?.[k]??"").trim();}
+function statusFromKod(kod){const k=String(kod||"").toUpperCase(); if(k==="A1")return "🔴 A1"; if(k==="A2")return "🔴 A2"; if(k==="D1")return "⚪ D1"; return k||"-";}
 
 async function init(){
   try{
-    const res = await fetch("data.json?v=20260704-3", { cache:"no-store" });
-    if(!res.ok) throw new Error(`data.json yüklenemedi (${res.status})`);
-    const json = await res.json();
-    const list = Array.isArray(json) ? json : (Array.isArray(json.data) ? json.data : []);
-    if(!list.length) throw new Error("data.json içinde liste bulunamadı");
-    DATA = list.map(normalizeItem);
+    const res=await fetch("data.json?v=20260704-anafirma-dogru",{cache:"no-store"});
+    if(!res.ok)throw new Error("data.json bulunamadı");
+    const json=await res.json();
+    DATA=(Array.isArray(json)?json:[]).map((x,i)=>({
+      id:i,
+      marka:val(x,"marka")||"İsimsiz Marka",
+      anafirma:val(x,"anafirma"),
+      kod:val(x,"kod"),
+      kategori:val(x,"kategori"),
+      alternatif:val(x,"alternatif"),
+      kaynak:val(x,"kaynak"),
+      not:val(x,"not")
+    }));
     render();
-  }catch(err){
-    els.stats.innerHTML = "";
-    els.results.innerHTML = `<div class="empty"><b>Hata oluştu</b><br>${esc(err.message)}<br><br>data.json dosyasının index.html ile aynı klasörde olduğundan emin ol.</div>`;
+  }catch(e){
+    stats.innerHTML="";
+    results.innerHTML=`<div class="empty"><b>Hata:</b> data.json yüklenemedi.<br>${esc(e.message)}</div>`;
   }
 }
 
-function matchesSearch(item){
-  const q = norm(els.search.value);
-  if(!q) return true;
-  const text = norm([item.marka,item.anaFirma,item.kod,item.kategori,item.alternatif,item.kaynak,item.not].join(" "));
-  return text.includes(q);
-}
-function matchesFilter(item){
-  if(filter === "all") return true;
-  if(filter === "hasAlt") return !!item.alternatif;
-  return item.kod === filter;
-}
-function filteredList(){
-  return DATA.filter(item => matchesSearch(item) && matchesFilter(item))
-    .sort((a,b) => a.marka.localeCompare(b.marka, "tr", {sensitivity:"base"}));
-}
-function renderStats(){
-  const total = DATA.length;
-  const a1 = DATA.filter(x=>x.kod === "A1").length;
-  const a2 = DATA.filter(x=>x.kod === "A2").length;
-  const d1 = DATA.filter(x=>x.kod === "D1").length;
-  els.stats.innerHTML = `
-    <div class="stat"><b>${total}</b><small>Toplam</small></div>
-    <div class="stat"><b>${a1}</b><small>A1</small></div>
-    <div class="stat"><b>${a2}</b><small>A2</small></div>
-    <div class="stat"><b>${d1}</b><small>D1</small></div>`;
-}
-function card(item){
-  const alt = item.alternatif ? `<div class="alt"><b>Alternatif:</b> ${esc(item.alternatif)}</div>` : "";
-  return `<article class="card" data-id="${item.id}">
-    <div class="cardTop">
-      <div>
-        <div class="badge ${esc(item.kod)}">${esc(codeLabel(item.kod))}</div>
-        <div class="brand">${esc(item.marka)}</div>
-      </div>
-      <div class="pill">${esc(item.kod || "-")}</div>
-    </div>
-    <div class="info">
-      <span>Ana Firma</span><b>${esc(item.anaFirma || "-")}</b>
-      <span>Kategori</span><b>${esc(item.kategori || "-")}</b>
-    </div>
-    ${alt}
-  </article>`;
-}
-function renderSearch(){
-  renderStats();
-  const list = filteredList();
-  if(!list.length){ els.results.innerHTML = `<div class="empty">Sonuç bulunamadı.</div>`; return; }
-  els.results.innerHTML = list.map(card).join("");
-}
-function groupBy(key){
-  const map = new Map();
-  DATA.forEach(item => {
-    const name = clean(item[key]) || "Belirtilmemiş";
-    if(!map.has(name)) map.set(name, []);
-    map.get(name).push(item);
-  });
-  return [...map.entries()].sort((a,b)=>a[0].localeCompare(b[0],"tr",{sensitivity:"base"}));
-}
-function renderGroups(key, dataAttr){
-  renderStats();
-  const groups = groupBy(key);
-  els.results.innerHTML = groups.map(([name,items]) => `
-    <div class="groupItem" ${dataAttr}="${esc(name)}">
-      <div><b>${esc(name)}</b><br><small>${items.length} marka</small></div><span>›</span>
-    </div>`).join("");
-}
-function renderAlternatives(){
-  renderStats();
-  const list = DATA.filter(x=>x.alternatif).sort((a,b)=>a.marka.localeCompare(b.marka,"tr",{sensitivity:"base"}));
-  els.results.innerHTML = list.map(card).join("") || `<div class="empty">Alternatif yazılı kayıt yok.</div>`;
-}
-function renderAbout(){
-  els.stats.innerHTML = "";
-  els.results.innerHTML = `<div class="empty" style="text-align:left">
-    <h2>ℹ️ Kullanım</h2>
-    <p>Bu uygulama <b>data.json</b> içindeki tüm markaları gösterir.</p>
-    <p>Kullanılan alanlar: <b>marka, anaFirma, kod, kategori, alternatif, kaynak, not</b>.</p>
-    <p>Listeyi güncellemek için sadece <b>data.json</b> dosyasını değiştirmen yeterlidir.</p>
-    <p>Toplam kayıt: <b>${DATA.length}</b></p>
-  </div>`;
-}
-function render(){
-  if(view === "search") renderSearch();
-  if(view === "companies") renderGroups("anaFirma", "data-company");
-  if(view === "categories") renderGroups("kategori", "data-category");
-  if(view === "alternatives") renderAlternatives();
-  if(view === "about") renderAbout();
-}
-function setNav(v){
-  document.querySelectorAll(".bottomNav button").forEach(btn => btn.classList.toggle("navActive", btn.dataset.view === v));
+function isFav(id){return favorites.includes(id);}
+function saveFav(){localStorage.setItem("boykot_favorites",JSON.stringify(favorites));}
+function toggleFav(id){id=Number(id);favorites=isFav(id)?favorites.filter(x=>x!==id):[...favorites,id];saveFav();render();}
+
+function currentList(){
+  const q=norm(search.value);
+  return DATA.filter(x=>{
+    const allText=norm([x.marka,x.anafirma,x.kod,x.kategori,x.alternatif,x.kaynak,x.not].join(" "));
+    const okQ=!q||allText.includes(q);
+    const okF=filter==="all"||(filter==="fav"&&isFav(x.id))||x.kod===filter;
+    return okQ&&okF;
+  }).sort((a,b)=>a.marka.localeCompare(b.marka,"tr"));
 }
 
-els.search.addEventListener("input", () => { view="search"; setNav(view); render(); });
-els.clearBtn.addEventListener("click", () => { els.search.value=""; els.search.focus(); view="search"; setNav(view); render(); });
-document.querySelectorAll("[data-filter]").forEach(btn => btn.addEventListener("click", () => {
-  document.querySelectorAll("[data-filter]").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  filter = btn.dataset.filter;
-  view = "search"; setNav(view); render();
-}));
-document.querySelectorAll(".bottomNav button").forEach(btn => btn.addEventListener("click", () => {
-  view = btn.dataset.view; setNav(view); render();
-}));
-els.results.addEventListener("click", e => {
-  const cardEl = e.target.closest("[data-id]");
-  if(cardEl){ showDetail(DATA.find(x=>x.id === Number(cardEl.dataset.id))); return; }
-  const companyEl = e.target.closest("[data-company]");
-  if(companyEl){ els.search.value = companyEl.dataset.company; view="search"; setNav(view); render(); return; }
-  const catEl = e.target.closest("[data-category]");
-  if(catEl){ els.search.value = catEl.dataset.category; view="search"; setNav(view); render(); }
-});
-function showDetail(item){
-  if(!item) return;
-  const source = item.kaynak && /^https?:\/\//i.test(item.kaynak)
-    ? `<p><a class="source" href="${esc(item.kaynak)}" target="_blank" rel="noopener">Kaynağı aç</a></p>`
-    : `<p><b>Kaynak:</b> ${esc(item.kaynak || "-")}</p>`;
-  els.detail.innerHTML = `<h2>${esc(item.marka)}</h2>
-    <div class="detailGrid">
-      <span>Kod</span><b>${esc(codeLabel(item.kod))}</b>
-      <span>Ana Firma</span><b>${esc(item.anaFirma || "-")}</b>
-      <span>Kategori</span><b>${esc(item.kategori || "-")}</b>
-      <span>Alternatif</span><b>${esc(item.alternatif || "-")}</b>
-      <span>Not</span><b>${esc(item.not || "-")}</b>
-    </div>${source}`;
-  els.dialog.showModal();
+function renderStats(){
+  const count=k=>DATA.filter(x=>x.kod===k).length;
+  stats.innerHTML=`<div class="stat"><b>${DATA.length}</b><small>Toplam</small></div><div class="stat"><b>${count("A1")}</b><small>A1</small></div><div class="stat"><b>${count("A2")}</b><small>A2</small></div><div class="stat"><b>${count("D1")}</b><small>D1</small></div>`;
 }
-els.closeDialog.addEventListener("click", () => els.dialog.close());
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault(); deferredPrompt = e; els.installBtn.hidden = false;
-  els.installBtn.onclick = async () => { els.installBtn.hidden = true; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; };
-});
-if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js?v=20260704-3").catch(()=>{}); }
+
+function card(x){return `<article class="card" data-id="${x.id}"><div class="cardTop"><div><div class="status">${statusFromKod(x.kod)}</div><h2>${esc(x.marka)}</h2></div><button class="favBtn" data-fav="${x.id}">${isFav(x.id)?"★":"☆"}</button></div><div class="pill">${esc(x.kod||"-")}</div><div class="info"><span>Ana Firma</span><b>${esc(x.anafirma||"-")}</b><span>Kategori</span><b>${esc(x.kategori||"-")}</b><span>Alternatif</span><b>${esc(x.alternatif||"-")}</b></div></article>`;}
+
+function renderSearch(){renderStats();const list=currentList();results.innerHTML=list.length?list.slice(0,500).map(card).join(""):`<div class="empty">Sonuç bulunamadı.</div>`;}
+function groupBy(key){const m=new Map();DATA.forEach(x=>{const k=x[key]||"Belirtilmemiş";if(!m.has(k))m.set(k,[]);m.get(k).push(x);});return [...m.entries()].sort((a,b)=>a[0].localeCompare(b[0],"tr"));}
+function renderGroups(key,attr){renderStats();results.innerHTML=groupBy(key).map(([name,items])=>`<div class="groupItem" ${attr}="${esc(name)}"><div><b>${esc(name)}</b><br><small>${items.length} marka</small></div><span>›</span></div>`).join("");}
+function renderAbout(){stats.innerHTML="";results.innerHTML=`<div class="empty" style="text-align:left"><h2>Kullanım</h2><p>Bu uygulama <b>data.json</b> dosyasındaki tam listeyi arar.</p><p>Doğru alan adı: <b>anafirma</b></p><p>Toplam kayıt: <b>${DATA.length}</b></p></div>`;}
+function render(){if(view==="search")renderSearch(); if(view==="companies")renderGroups("anafirma","data-company"); if(view==="categories")renderGroups("kategori","data-category"); if(view==="about")renderAbout();}
+function setNav(v){document.querySelectorAll(".bottomNav button").forEach(b=>b.classList.toggle("navActive",b.dataset.view===v));}
+
+search.addEventListener("input",()=>{view="search";setNav("search");render();});
+document.getElementById("clearBtn").addEventListener("click",()=>{search.value="";filter="all";document.querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("active",b.dataset.filter==="all"));render();});
+document.querySelectorAll("[data-filter]").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll("[data-filter]").forEach(b=>b.classList.remove("active"));btn.classList.add("active");filter=btn.dataset.filter;view="search";setNav("search");render();}));
+document.querySelectorAll(".bottomNav button").forEach(btn=>btn.addEventListener("click",()=>{view=btn.dataset.view;setNav(view);render();}));
+results.addEventListener("click",e=>{const fav=e.target.closest("[data-fav]");if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);return;}const card=e.target.closest("[data-id]");if(card){showDetail(DATA[Number(card.dataset.id)]);return;}const c=e.target.closest("[data-company]");if(c){search.value=c.getAttribute("data-company");view="search";setNav("search");render();return;}const cat=e.target.closest("[data-category]");if(cat){search.value=cat.getAttribute("data-category");view="search";setNav("search");render();}});
+function showDetail(x){if(!x)return;const link=x.kaynak&&x.kaynak.startsWith("http")?`<p><a target="_blank" rel="noopener" href="${esc(x.kaynak)}">Kaynağı aç</a></p>`:"";document.getElementById("detailContent").innerHTML=`<h2>${esc(x.marka)}</h2><p><b>Ana Firma:</b> ${esc(x.anafirma||"-")}</p><p><b>Kod:</b> ${esc(x.kod||"-")}</p><p><b>Kategori:</b> ${esc(x.kategori||"-")}</p><p><b>Alternatif:</b> ${esc(x.alternatif||"-")}</p><p><b>Kaynak:</b> ${esc(x.kaynak||"-")}</p><p><b>Not:</b> ${esc(x.not||"-")}</p>${link}`;document.getElementById("detailDialog").showModal();}
+document.getElementById("closeDialog").addEventListener("click",()=>document.getElementById("detailDialog").close());
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;const b=document.getElementById("installBtn");b.hidden=false;b.onclick=async()=>{b.hidden=true;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;};});
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 init();

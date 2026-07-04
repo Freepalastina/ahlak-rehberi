@@ -9,51 +9,45 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="appShell">
+  <div id="app" class="appShell">
     <header class="hero">
-      <div class="heroTop">
+      <div class="topbar">
         <div class="brandMark">BR</div>
         <div>
           <h1>Boykot Rehberi</h1>
           <p id="subtitle">Marka, ana firma ve alternatif ara</p>
         </div>
-        <button id="themeBtn" class="iconBtn" aria-label="Tema değiştir">🌙</button>
+        <button id="themeBtn" class="iconBtn" type="button" aria-label="Tema değiştir">☾</button>
       </div>
 
-      <label class="searchBox" for="searchInput">
+      <label class="searchBox">
         <span>🔎</span>
-        <input id="searchInput" type="search" placeholder="Marka, ana firma, kategori veya alternatif ara..." autocomplete="off" />
-        <button id="clearSearch" class="clearBtn" aria-label="Aramayı temizle">×</button>
+        <input id="search" type="search" autocomplete="off" placeholder="Marka, ana firma, kategori veya alternatif ara..." />
+        <button id="clearBtn" type="button" aria-label="Aramayı temizle">×</button>
       </label>
 
-      <div class="quickFilters" aria-label="Filtreler">
-        <button class="chip active" data-filter="all">Tümü</button>
-        <button class="chip" data-filter="boykot">Boykot</button>
-        <button class="chip" data-filter="inceleniyor">İnceleniyor</button>
-        <button class="chip" data-filter="alternatif">Alternatif</button>
-      </div>
+      <div id="stats" class="stats"></div>
     </header>
 
-    <main>
-      <section id="stats" class="stats"></section>
-      <section id="contentTitle" class="sectionTitle"></section>
+    <main class="content">
+      <section id="sectionHeader" class="sectionHeader"></section>
       <section id="results" class="results"></section>
     </main>
+
+    <nav class="bottomNav" aria-label="Alt menü">
+      <button data-view="home" class="active" type="button"><span>⌂</span><b>Ana Sayfa</b></button>
+      <button data-view="companies" type="button"><span>🏢</span><b>Ana Firma</b></button>
+      <button data-view="categories" type="button"><span>▦</span><b>Kategori</b></button>
+      <button data-view="favorites" type="button"><span>★</span><b>Favori</b></button>
+      <button data-view="about" type="button"><span>ⓘ</span><b>Bilgi</b></button>
+    </nav>
   </div>
 
-  <nav class="bottomNav" aria-label="Alt menü">
-    <button class="navActive" data-view="home"><span>🏠</span><small>Ana Sayfa</small></button>
-    <button data-view="companies"><span>🏢</span><small>Ana Firmalar</small></button>
-    <button data-view="categories"><span>📂</span><small>Kategoriler</small></button>
-    <button data-view="favorites"><span>⭐</span><small>Favoriler</small></button>
-    <button data-view="about"><span>ℹ️</span><small>Hakkında</small></button>
-  </nav>
-
-  <dialog id="detailDialog" class="sheet">
+  <dialog id="detailDialog" class="detailDialog">
+    <button id="closeDialog" class="closeDialog" type="button">×</button>
     <div id="detailContent"></div>
-    <button id="closeDialog" class="primaryBtn">Kapat</button>
   </dialog>
 
-  <script src="app.js" defer></script>
+  <script src="app.js"></script>
 </body>
 </html>

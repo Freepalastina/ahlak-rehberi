@@ -1,8 +1,8 @@
-# Boykot Rehberi - Modern Sürüm
+# Boykot Rehberi
 
-GitHub Pages'e yüklemek için ZIP içindeki tüm dosyaları repoya yükle.
+GitHub Pages için hazır PWA uygulaması.
 
-Dosyalar:
+Yüklenecek dosyalar:
 - index.html
 - app.js
 - style.css
@@ -12,4 +12,4 @@ Dosyalar:
 - icon-192.png
 - icon-512.png
 
-Not: data.json içinde alan adı küçük harfle `anafirma` olarak düzenlendi.
+Not: Uygulama hem `anaFirma` hem de `anafirma` alanını okuyabilir.

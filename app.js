@@ -1,6 +1,3 @@
-Tabii, kod burada:
-
-```js
 let DATA = [];
 let filter = "all";
 let view = "search";

@@ -1,102 +1,14 @@
-[
-  {
-    "marka": "Ariel",
-    "anaFirma": "P&G",
-    "durum": "boykot",
-    "kod": "A2",
-    "kategori": "Temizlik",
-    "alternatif": "Peros, Boron, Claro",
-    "kaynak": "https://us.pg.com/brands/",
-    "not": "Örnek kayıt"
-  },
-  {
-    "marka": "Fairy",
-    "anaFirma": "P&G",
-    "durum": "boykot",
-    "kod": "A2",
-    "kategori": "Bulaşık",
-    "alternatif": "Claro, Frosch",
-    "kaynak": "https://us.pg.com/brands/",
-    "not": "Örnek kayıt"
-  },
-  {
-    "marka": "Pantene",
-    "anaFirma": "P&G",
-    "durum": "boykot",
-    "kod": "A2",
-    "kategori": "Saç Bakımı",
-    "alternatif": "Bioxcin, yerel alternatifler",
-    "kaynak": "https://us.pg.com/brands/",
-    "not": "Örnek kayıt"
-  },
-  {
-    "marka": "KitKat",
-    "anaFirma": "Nestlé",
-    "durum": "boykot",
-    "kod": "A2",
-    "kategori": "Çikolata",
-    "alternatif": "Eti, Elvan",
-    "kaynak": "https://www.nestle.com/brands",
-    "not": "Örnek kayıt"
-  },
-  {
-    "marka": "Nescafé",
-    "anaFirma": "Nestlé",
-    "durum": "boykot",
-    "kod": "A2",
-    "kategori": "Kahve",
-    "alternatif": "Mehmet Efendi, yerel kahveciler",
-    "kaynak": "https://www.nestle.com/brands",
-    "not": "Örnek kayıt"
-  },
-  {
-    "marka": "Dove",
-    "anaFirma": "Unilever",
-    "durum": "boykot",
-    "kod": "A2",
-    "kategori": "Kişisel Bakım",
-    "alternatif": "Duru, yerel alternatifler",
-    "kaynak": "https://www.unilever.com/brands/all-brands/",
-    "not": "Örnek kayıt"
-  },
-  {
-    "marka": "Balea",
-    "anaFirma": "dm",
-    "durum": "alternatif",
-    "kod": "C2",
-    "kategori": "Kozmetik",
-    "alternatif": "",
-    "kaynak": "",
-    "not": "Örnek alternatif"
-  },
-  {
-    "marka": "Peros",
-    "anaFirma": "Beyaz Kağıt",
-    "durum": "alternatif",
-    "kod": "C2",
-    "kategori": "Temizlik",
-    "alternatif": "",
-    "kaynak": "",
-    "not": "Örnek alternatif"
-  },
-  {
-    "marka": "Boron",
-    "anaFirma": "Eti Maden",
-    "durum": "alternatif",
-    "kod": "C2",
-    "kategori": "Temizlik",
-    "alternatif": "",
-    "kaynak": "",
-    "not": "Örnek alternatif"
-  },
-  {
-    "marka": "Bilinmeyen Marka",
-    "anaFirma": "",
-    "durum": "inceleniyor",
-    "kod": "D1",
-    "kategori": "",
-    "alternatif": "",
-    "kaynak": "",
-    "not": "Araştırılacak örnek"
-  }
-]
+[0…99]	
+[100…199]	
+[200…299]	
+[300…399]	
+[400…499]	
+[500…599]	
+[600…699]	
+[700…799]	
+[800…899]	
+[900…999]	
+[1000…1099]	
+[1100…1199]	
+[1200…1299]	
+[1300…1361]	

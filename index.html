@@ -1,56 +1,60 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
   <title>Boykot Rehberi</title>
-  <meta name="theme-color" content="#111827">
-  <meta name="description" content="Telefonda hızlı marka boykot arama rehberi">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Boykot Rehberi</p>
+      <h1>Marka Ara</h1>
+      <p class="sub">Marka, ana firma, kategori, alternatif, kod veya not içinde ara.</p>
+    </div>
+    <button id="installBtn" class="install" hidden>Uygulamayı kur</button>
+  </header>
+
   <main class="app">
-    <header class="top">
-      <div>
-        <h1>Boykot Rehberi</h1>
-        <p>Markayı yaz, sonucu hemen gör.</p>
-      </div>
-      <button id="installBtn" class="install" hidden>📲 Yükle</button>
-    </header>
-
-    <section class="searchPanel">
-      <div class="searchLine">
-        <span>🔍</span>
-        <input id="search" type="search" placeholder="Marka ara..." autocomplete="off" autofocus>
-        <button id="clearBtn" title="Temizle">×</button>
-      </div>
-
-      <div class="filters">
-        <button data-filter="all" class="active">Hepsi</button>
-        <button data-filter="boykot">🔴 Boykot</button>
-        <button data-filter="dikkat">🟠 Dikkat</button>
-        <button data-filter="alternatif">🟢 Alternatif</button>
-        <button data-filter="inceleniyor">⚪ İnceleniyor</button>
-      </div>
+    <section class="searchBox">
+      <input id="search" type="search" placeholder="Marka veya firma yaz..." autocomplete="off" />
+      <button id="clearBtn" aria-label="Temizle">×</button>
     </section>
 
-    <section class="stats" id="stats"></section>
-    <section id="results" class="results"></section>
+    <section id="stats" class="stats"></section>
 
-    <nav class="bottomNav">
-      <button data-view="search" class="navActive">🔍<small>Ara</small></button>
-      <button data-view="companies">🏢<small>Firmalar</small></button>
-      <button data-view="categories">📂<small>Kategori</small></button>
-      <button data-view="about">ℹ️<small>Bilgi</small></button>
-    </nav>
+    <section class="tabs" aria-label="Filtreler">
+      <button class="active" data-filter="all">Hepsi</button>
+      <button data-filter="A1">A1</button>
+      <button data-filter="A2">A2</button>
+      <button data-filter="D1">D1</button>
+      <button data-filter="hasAlt">Alternatifli</button>
+    </section>
+
+    <section id="results" class="results">
+      <div class="empty">Yükleniyor...</div>
+    </section>
   </main>
 
+  <nav class="bottomNav" aria-label="Alt menü">
+    <button class="navActive" data-view="search">🔎<span>Ara</span></button>
+    <button data-view="companies">🏢<span>Ana Firma</span></button>
+    <button data-view="categories">📂<span>Kategori</span></button>
+    <button data-view="alternatives">🟢<span>Alternatif</span></button>
+    <button data-view="about">ℹ️<span>Bilgi</span></button>
+  </nav>
+
   <dialog id="detailDialog">
-    <article id="detailContent"></article>
-    <button id="closeDialog">Kapat</button>
+    <div class="dialogTop">
+      <strong>Detay</strong>
+      <button id="closeDialog" aria-label="Kapat">×</button>
+    </div>
+    <div id="detailContent"></div>
   </dialog>
 
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>

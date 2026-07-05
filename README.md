@@ -1,17 +1,12 @@
-Boykot Rehberi - Çalışan Final Sürüm
+# Boykot Rehberi V2
 
-GitHub Pages'e yüklemek için bu ZIP'i açın ve içindeki dosyaların tamamını repoya yükleyin.
-ZIP dosyasını değil, içindeki dosyaları yükleyin.
+Bu paket GitHub Pages için hazırlandı.
 
-Gerekli dosyalar:
-- index.html
-- app.js
-- style.css
-- data.json
-- manifest.json
-- sw.js
-- icon-192.png
-- icon-512.png
-- README.md
+## İçerik
+- `data.json`: 1571 toplam kayıt
+- Ana boykot listesi: 1362 kayıt
+- `alternatif.ods` içinden eklenen Boykotta Değil markaları: 209 kayıt
+- Tekrar olduğu için eklenmeyen alternatif kayıtları: 9 kayıt
 
-Bu sürüm eski PWA cache'lerini temizler.
+## Yükleme
+ZIP içindeki dosyaları GitHub reposunun ana klasörüne yükleyin. ZIP dosyasını değil, içindeki dosyaları yükleyin.

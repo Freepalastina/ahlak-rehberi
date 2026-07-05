@@ -2,32 +2,34 @@
 <html lang="tr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#556b2f" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#6f7f3f" />
   <title>Boykot Rehberi</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
+  <div class="appShell">
     <header class="hero">
-      <div class="topbar">
+      <div class="topLine">
         <div class="brandMark">BR</div>
         <div>
-          <h1 data-i18n="appTitle">Boykot Rehberi</h1>
-          <p data-i18n="appSubtitle">Marka, ana firma ve alternatifleri hızlıca ara.</p>
+          <h1 id="appTitle">Boykot Rehberi</h1>
+          <p id="appSubtitle">Marka, ana firma ve alternatif arama</p>
         </div>
-        <button id="themeBtn" class="iconBtn" title="Tema">🌙</button>
+        <button id="themeBtn" class="iconBtn" aria-label="Tema">🌙</button>
       </div>
-      <div class="langBox" role="group" aria-label="Language">
-        <button data-lang="tr" class="lang active">🇹🇷 TR</button>
-        <button data-lang="en" class="lang">🇬🇧 EN</button>
-        <button data-lang="de" class="lang">🇩🇪 DE</button>
+
+      <div class="langBar" aria-label="Language">
+        <button data-lang="tr" class="langBtn active">🇹🇷 TR</button>
+        <button data-lang="en" class="langBtn">🇬🇧 EN</button>
+        <button data-lang="de" class="langBtn">🇩🇪 DE</button>
       </div>
-      <label class="searchWrap">
-        <span>🔎</span>
-        <input id="search" type="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="Marka, ana firma, kategori veya alternatif ara..." />
-        <button id="clearBtn" type="button">×</button>
+
+      <label class="searchBox">
+        <span>🔍</span>
+        <input id="search" autocomplete="off" placeholder="Marka ara..." />
+        <button id="clearBtn" class="clearBtn" aria-label="Temizle">×</button>
       </label>
     </header>
 
@@ -36,19 +38,19 @@
       <section id="chips" class="chips"></section>
       <section id="results" class="results"></section>
     </main>
-
-    <nav class="bottomNav" aria-label="Main navigation">
-      <button data-view="home" class="active"><span>🏠</span><b data-i18n="navHome">Ana Sayfa</b></button>
-      <button data-view="companies"><span>🏢</span><b data-i18n="navCompanies">Ana Firmalar</b></button>
-      <button data-view="categories"><span>📂</span><b data-i18n="navCategories">Kategoriler</b></button>
-      <button data-view="safe"><span>✅</span><b data-i18n="navSafe">Boykotta Değil</b></button>
-      <button data-view="about"><span>ℹ️</span><b data-i18n="navAbout">Hakkında</b></button>
-    </nav>
   </div>
 
-  <dialog id="detailDialog" class="detailDialog">
+  <nav class="bottomNav" aria-label="Navigation">
+    <button data-view="home" class="navActive"><span>🏠</span><b data-i18n="navHome">Ana Sayfa</b></button>
+    <button data-view="companies"><span>🏢</span><b data-i18n="navCompanies">Ana Firmalar</b></button>
+    <button data-view="categories"><span>📂</span><b data-i18n="navCategories">Kategoriler</b></button>
+    <button data-view="notBoycotted"><span>✅</span><b data-i18n="navNotBoycotted">Boykotta Değil</b></button>
+    <button data-view="about"><span>ℹ️</span><b data-i18n="navAbout">Hakkında</b></button>
+  </nav>
+
+  <dialog id="detailDialog">
     <div id="detailContent"></div>
-    <button id="closeDialog" class="closeDialog" data-i18n="close">Kapat</button>
+    <button id="closeDialog" class="primaryBtn">Kapat</button>
   </dialog>
 
   <script src="app.js"></script>

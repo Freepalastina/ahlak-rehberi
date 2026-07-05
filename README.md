@@ -1,8 +1,9 @@
-# Boykot Rehberi
+Boykot Rehberi - Çalışan Final Sürüm
 
-GitHub Pages için hazır PWA uygulaması.
+GitHub Pages'e yüklemek için bu ZIP'i açın ve içindeki dosyaların tamamını repoya yükleyin.
+ZIP dosyasını değil, içindeki dosyaları yükleyin.
 
-Yüklenecek dosyalar:
+Gerekli dosyalar:
 - index.html
 - app.js
 - style.css
@@ -11,5 +12,6 @@ Yüklenecek dosyalar:
 - sw.js
 - icon-192.png
 - icon-512.png
+- README.md
 
-Not: Uygulama hem `anaFirma` hem de `anafirma` alanını okuyabilir.
+Bu sürüm eski PWA cache'lerini temizler.
